@@ -11,6 +11,13 @@
 		8842F5E425A778400015E59A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842F5E325A778400015E59A /* ContentView.swift */; };
 		8842F5E625A778410015E59A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8842F5E525A778410015E59A /* Assets.xcassets */; };
 		8842F5E925A778410015E59A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8842F5E825A778410015E59A /* Preview Assets.xcassets */; };
+		8842F5F225A779010015E59A /* JsonDecodableWeatherStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842F5F125A779010015E59A /* JsonDecodableWeatherStructs.swift */; };
+		8842F5F725A77A190015E59A /* RWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842F5F625A77A190015E59A /* RWeatherViewModel.swift */; };
+		8842F5FA25A77A7B0015E59A /* RWeatherDetailedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842F5F925A77A7B0015E59A /* RWeatherDetailedViewModel.swift */; };
+		8842F5FD25A77E3C0015E59A /* RWeatherSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8842F5FC25A77E3C0015E59A /* RWeatherSettingsViewModel.swift */; };
+		888E044825A852160050BB62 /* RWeatherDataGetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888E044725A852160050BB62 /* RWeatherDataGetting.swift */; };
+		888E044B25A853250050BB62 /* RWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888E044A25A853250050BB62 /* RWeatherData.swift */; };
+		88CCFE2B25AB5A65003E096E /* RWeatherBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CCFE2A25AB5A65003E096E /* RWeatherBackgroundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +27,13 @@
 		8842F5E525A778410015E59A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8842F5E825A778410015E59A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8842F5EA25A778410015E59A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8842F5F125A779010015E59A /* JsonDecodableWeatherStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDecodableWeatherStructs.swift; sourceTree = "<group>"; };
+		8842F5F625A77A190015E59A /* RWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherViewModel.swift; sourceTree = "<group>"; };
+		8842F5F925A77A7B0015E59A /* RWeatherDetailedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherDetailedViewModel.swift; sourceTree = "<group>"; };
+		8842F5FC25A77E3C0015E59A /* RWeatherSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherSettingsViewModel.swift; sourceTree = "<group>"; };
+		888E044725A852160050BB62 /* RWeatherDataGetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherDataGetting.swift; sourceTree = "<group>"; };
+		888E044A25A853250050BB62 /* RWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherData.swift; sourceTree = "<group>"; };
+		88CCFE2A25AB5A65003E096E /* RWeatherBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWeatherBackgroundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +66,8 @@
 		8842F5E025A778400015E59A /* R_Pogodynka */ = {
 			isa = PBXGroup;
 			children = (
+				8842F5F525A779470015E59A /* ViewModels */,
+				8842F5F425A779090015E59A /* Models */,
 				8842F5E125A778400015E59A /* R_PogodynkaApp.swift */,
 				8842F5E325A778400015E59A /* ContentView.swift */,
 				8842F5E525A778410015E59A /* Assets.xcassets */,
@@ -67,6 +83,27 @@
 				8842F5E825A778410015E59A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8842F5F425A779090015E59A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8842F5F125A779010015E59A /* JsonDecodableWeatherStructs.swift */,
+				888E044725A852160050BB62 /* RWeatherDataGetting.swift */,
+				888E044A25A853250050BB62 /* RWeatherData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8842F5F525A779470015E59A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8842F5F625A77A190015E59A /* RWeatherViewModel.swift */,
+				8842F5F925A77A7B0015E59A /* RWeatherDetailedViewModel.swift */,
+				8842F5FC25A77E3C0015E59A /* RWeatherSettingsViewModel.swift */,
+				88CCFE2A25AB5A65003E096E /* RWeatherBackgroundView.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +175,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8842F5F725A77A190015E59A /* RWeatherViewModel.swift in Sources */,
+				888E044B25A853250050BB62 /* RWeatherData.swift in Sources */,
+				8842F5FD25A77E3C0015E59A /* RWeatherSettingsViewModel.swift in Sources */,
 				8842F5E425A778400015E59A /* ContentView.swift in Sources */,
 				8842F5E225A778400015E59A /* R_PogodynkaApp.swift in Sources */,
+				88CCFE2B25AB5A65003E096E /* RWeatherBackgroundView.swift in Sources */,
+				8842F5F225A779010015E59A /* JsonDecodableWeatherStructs.swift in Sources */,
+				888E044825A852160050BB62 /* RWeatherDataGetting.swift in Sources */,
+				8842F5FA25A77A7B0015E59A /* RWeatherDetailedViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

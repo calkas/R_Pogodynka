@@ -9,8 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            RWeatherViewModel().tabItem {
+                Image(systemName: "sun.max.fill")
+                Text("Main")
+            }
+                
+            RWeatherDetailedViewModel().tabItem {
+                Image(systemName: "thermometer.sun.fill")
+                Text("Detailed")
+            }
+            
+            RWeatherSettingsViewModel().tabItem {
+                Image(systemName: "gearshape")
+                Text("Settings")
+            }
+        }
+        
+        
     }
 }
 
