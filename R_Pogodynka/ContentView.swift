@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    var settings = Settings(location: "Katowice")
     var body: some View {
         TabView {
-            RWeatherViewModel().tabItem {
+            RWeatherViewModel().environmentObject(settings).tabItem {
                 Image(systemName: "sun.max.fill")
                 Text("Main")
             }
                 
-            RWeatherDetailedViewModel().tabItem {
+            RWeatherDetailedViewModel().environmentObject(settings).tabItem {
                 Image(systemName: "thermometer.sun.fill")
                 Text("Detailed")
             }
             
-            RWeatherSettingsViewModel().tabItem {
+            RWeatherSettingsViewModel().environmentObject(settings).tabItem {
                 Image(systemName: "gearshape")
                 Text("Settings")
             }

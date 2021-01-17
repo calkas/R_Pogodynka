@@ -9,5 +9,5 @@ import Foundation
 
 
 protocol RWeatherDataGetting {
-    func startWeatherDataProcessing() -> Void
+    func startWeatherDataProcessing(location: String) -> Void
 }

@@ -8,22 +8,14 @@
 
 import Foundation
 struct RWeatherSimpleData{
-    init(city: String)
-    {
-        self.city = city
-    }
-    var city = ""
+    var city = "--"
     var weatherDescription = "--"
     var icon = ""
     var temperature = ""
 }
 
 struct RWeatherDetailedData {
-    init(city: String)
-    {
-        self.city = city
-    }
-    var city = ""
+    var city = "--"
     var weatherDescription = "--"
     var temperature = ""
     var windSpeed = ""
@@ -35,14 +27,13 @@ struct RWeatherDetailedData {
 }
 
 class RWeatherData : ObservableObject, RWeatherDataGetting {
-
-    @Published var weatherSimpleData = RWeatherSimpleData(city: "Katowice")
-    @Published var weatherDeatiledData = RWeatherDetailedData(city: "Katowice")
-    @Published var isNight = false
-    private let urlWeatherAddress: String = "http://api.weatherstack.com/current?access_key=9a71c6a9950ded3d89c11b3c3091de2f&query=Katowice"
     
-    func startWeatherDataProcessing() {
-        if let url = URL(string: urlWeatherAddress)
+    @Published var weatherSimpleData = RWeatherSimpleData()
+    @Published var weatherDeatiledData = RWeatherDetailedData()
+    @Published var isNight = false
+    
+    func startWeatherDataProcessing(location: String) {
+        if let url = URL(string: getWeatherUrlAddress(location: location))
         {
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil {
@@ -78,6 +69,13 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
         }
     }
     
+    private func getWeatherUrlAddress(location: String) -> String {
+        var urlWeatherAddress = "http://api.weatherstack.com/current?access_key=9a71c6a9950ded3d89c11b3c3091de2f&query="
+        urlWeatherAddress += location
+        
+        return urlWeatherAddress
+    }
+    
     private func getWeatherIcon (weatherDesc : String) -> String {
         switch weatherDesc {
             case "Clear": return "moon.stars.fill"
@@ -109,7 +107,8 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
     
     private func saveSimpleWeatherData(data: Weather) {
         
-        if let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature {
+        if let city = data.request?.query, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature {
+            weatherSimpleData.city = city
             weatherSimpleData.weatherDescription = weatherDescription
             weatherSimpleData.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
             weatherSimpleData.temperature = "\(temperature) °C"
@@ -117,10 +116,10 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
         
     }
     
-    
     private func saveDetailedWeatherData(data: Weather) {
-        if let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature, let windSpeed = data.current?.wind_speed, let windDir = data.current?.wind_dir, let pressure = data.current?.pressure, let humidity = data.current?.humidity, let cloudcover = data.current?.cloudcover, let uv_index = data.current?.uv_index {
+        if let city = data.request?.query, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature, let windSpeed = data.current?.wind_speed, let windDir = data.current?.wind_dir, let pressure = data.current?.pressure, let humidity = data.current?.humidity, let cloudcover = data.current?.cloudcover, let uv_index = data.current?.uv_index {
             
+            weatherDeatiledData.city = city
             weatherDeatiledData.weatherDescription = weatherDescription
             weatherDeatiledData.temperature = "\(temperature) °C"
             weatherDeatiledData.windSpeed = "\(windSpeed) km/h"

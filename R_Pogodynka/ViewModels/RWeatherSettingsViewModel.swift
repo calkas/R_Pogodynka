@@ -8,18 +8,26 @@
 import SwiftUI
 
 struct RWeatherSettingsViewModel: View {
-    @State private var location: String = ""
+    @EnvironmentObject var settings: Settings
     var body: some View {
-        VStack {
-            Text("RWeatherSettingsViewModel")
-            TextField("Enter your location...", text: $location).textFieldStyle(RoundedBorderTextFieldStyle())
-                .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.white, .gray,Color("LightBlueWeatherColor")]), startPoint: /*@START_MENU_TOKEN@*/.topLeading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.bottomTrailing/*@END_MENU_TOKEN@*/)
+                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            VStack {
+                Text(settings.location)
+                Text("Enter your location: ")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                TextField("Enter your location...", text:   $settings.location).textFieldStyle(RoundedBorderTextFieldStyle())
+                    .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            }
         }
     }
+        
 }
 
 struct RWeatherSettingsViewModel_Previews: PreviewProvider {
     static var previews: some View {
-        RWeatherSettingsViewModel()
+        RWeatherSettingsViewModel().environmentObject(Settings(location: "Katowice"))
     }
 }

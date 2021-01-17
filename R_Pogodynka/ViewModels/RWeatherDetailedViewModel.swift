@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct RWeatherDetailedViewModel: View {
+    @EnvironmentObject var settings: Settings
     @ObservedObject var weather: RWeatherData = RWeatherData()
     
     var body: some View {
         ZStack {
             RWeatherBackgroundView(isNight: $weather.isNight)
+            
             VStack {
                 Text(weather.weatherDeatiledData.city)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
+                    .padding()
                 Text(weather.weatherDeatiledData.weatherDescription)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
-                Divider().background(Color.white)
                 Text("Temperature: " + weather.weatherDeatiledData.temperature)
                     .font(.body)
                     .foregroundColor(.white)
@@ -40,18 +42,25 @@ struct RWeatherDetailedViewModel: View {
                 Text("UV index: " + weather.weatherDeatiledData.uv_index)
                     .font(.body)
                     .foregroundColor(.white)
+                
                 Spacer()
+                Button(action: { self.weather.startWeatherDataProcessing(location: settings.location)}, label: {
+                    WeatherButton(title: "Get Weather", textColor: weather.isNight ? .black : .blue, backgroundColor: .white)
+                }).offset(y: -100)
             }
             
             
-        }.onAppear(){
-            self.weather.startWeatherDataProcessing()
         }
+        /*
+        .onAppear(){
+            self.weather.startWeatherDataProcessing(location: settings.location)
+        }
+        */
     }
 }
 
 struct RWeatherDetailedViewModel_Previews: PreviewProvider {
     static var previews: some View {
-        RWeatherDetailedViewModel()
+        RWeatherDetailedViewModel().environmentObject(Settings(location: "Katowice"))
     }
 }
