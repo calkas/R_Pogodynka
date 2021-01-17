@@ -7,17 +7,12 @@
 // http://api.weatherstack.com/current?access_key=9a71c6a9950ded3d89c11b3c3091de2f&query=Katowice
 
 import Foundation
-struct RWeatherSimpleData{
-    var city = "--"
-    var weatherDescription = "--"
-    var icon = ""
-    var temperature = ""
-}
 
-struct RWeatherDetailedData {
+struct RWeatherDataResponse {
     var city = "--"
     var weatherDescription = "--"
     var temperature = ""
+    var icon = ""
     var windSpeed = ""
     var windDir = ""
     var pressure = ""
@@ -28,8 +23,7 @@ struct RWeatherDetailedData {
 
 class RWeatherData : ObservableObject, RWeatherDataGetting {
     
-    @Published var weatherSimpleData = RWeatherSimpleData()
-    @Published var weatherDeatiledData = RWeatherDetailedData()
+    @Published var weatherDataResponse = RWeatherDataResponse()
     @Published var isNight = false
     
     func startWeatherDataProcessing(location: String) {
@@ -57,9 +51,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
                                         self.isNight = true
                                     }
                                 }
-                                
-                                self.saveSimpleWeatherData(data: rawData)
-                                self.saveDetailedWeatherData(data: rawData)
+                                self.saveWeatherDataResponse(data: rawData)
                             }
                         }
                     }
@@ -77,6 +69,10 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
     }
     
     private func getWeatherIcon (weatherDesc : String) -> String {
+        if isNight {
+            return "moon.stars.fill"
+        }
+        
         switch weatherDesc {
             case "Clear": return "moon.stars.fill"
             case "Sunny": return "sun.max.fill"
@@ -102,32 +98,21 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
             case "Heavy rain at times": return "cloud.heavyrain.fill"
             default: return "sun.max.fill"
         }
-
     }
-    
-    private func saveSimpleWeatherData(data: Weather) {
         
-        if let city = data.request?.query, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature {
-            weatherSimpleData.city = city
-            weatherSimpleData.weatherDescription = weatherDescription
-            weatherSimpleData.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
-            weatherSimpleData.temperature = "\(temperature) °C"
-        }
-        
-    }
-    
-    private func saveDetailedWeatherData(data: Weather) {
+    private func saveWeatherDataResponse(data: Weather) {
         if let city = data.request?.query, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature, let windSpeed = data.current?.wind_speed, let windDir = data.current?.wind_dir, let pressure = data.current?.pressure, let humidity = data.current?.humidity, let cloudcover = data.current?.cloudcover, let uv_index = data.current?.uv_index {
             
-            weatherDeatiledData.city = city
-            weatherDeatiledData.weatherDescription = weatherDescription
-            weatherDeatiledData.temperature = "\(temperature) °C"
-            weatherDeatiledData.windSpeed = "\(windSpeed) km/h"
-            weatherDeatiledData.windDir = windDir
-            weatherDeatiledData.pressure = "\(pressure) hPa"
-            weatherDeatiledData.humidity = "\(humidity) %"
-            weatherDeatiledData.cloudcover = "\(cloudcover) %"
-            weatherDeatiledData.uv_index = "\(uv_index)"
+            weatherDataResponse.city = city
+            weatherDataResponse.weatherDescription = weatherDescription
+            weatherDataResponse.temperature = "\(temperature) °C"
+            weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
+            weatherDataResponse.windSpeed = "\(windSpeed) km/h"
+            weatherDataResponse.windDir = windDir
+            weatherDataResponse.pressure = "\(pressure) hPa"
+            weatherDataResponse.humidity = "\(humidity) %"
+            weatherDataResponse.cloudcover = "\(cloudcover) %"
+            weatherDataResponse.uv_index = "\(uv_index)"
         }
         
     }

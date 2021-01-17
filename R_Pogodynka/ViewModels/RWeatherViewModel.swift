@@ -10,36 +10,35 @@ import SwiftUI
 struct RWeatherViewModel: View {
     
     @EnvironmentObject var settings: Settings
-    @ObservedObject var weather: RWeatherData = RWeatherData()
+    @ObservedObject var weatherData: RWeatherData = RWeatherData()
     
     var body: some View {
         ZStack {
-            RWeatherBackgroundView(isNight: $weather.isNight)
+            RWeatherBackgroundView(isNight: $weatherData.isNight)
             
             VStack(spacing: 10) {
-                Text(weather.weatherSimpleData.city)
+                Text(weatherData.weatherDataResponse.city)
                     .font(/*@START_MENU_TOKEN@*/.largeTitle/*@END_MENU_TOKEN@*/)
                     .bold()
                     .foregroundColor(.white)
                     .padding()
-                Text(weather.weatherSimpleData.weatherDescription)
+                Text(weatherData.weatherDataResponse.weatherDescription)
                     .padding()
                     .foregroundColor(.white)
 
-                Image(systemName:weather.weatherSimpleData.icon)
+                Image(systemName:weatherData.weatherDataResponse.icon)
                                 .renderingMode(.original)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 100, height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                Text(weather.weatherSimpleData.temperature)
+                Text(weatherData.weatherDataResponse.temperature)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
                 Spacer()
-                Button(action: { self.weather.startWeatherDataProcessing(location: settings.location)}, label: {
-                    WeatherButton(title: "Get Weather", textColor: weather.isNight ? .black : .blue, backgroundColor: .white)
-                })
-                Spacer()
+                Button(action: { self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
+                    WeatherButton(title: "Get Weather", textColor: weatherData.isNight ? .black : .blue, backgroundColor: .white)
+                }).offset(y: -90.0)
             }
         }
         

@@ -9,44 +9,44 @@ import SwiftUI
 
 struct RWeatherDetailedViewModel: View {
     @EnvironmentObject var settings: Settings
-    @ObservedObject var weather: RWeatherData = RWeatherData()
+    @ObservedObject var weatherData: RWeatherData = RWeatherData()
     
     var body: some View {
         ZStack {
-            RWeatherBackgroundView(isNight: $weather.isNight)
+            RWeatherBackgroundView(isNight: $weatherData.isNight)
             
             VStack {
-                Text(weather.weatherDeatiledData.city)
+                Text(weatherData.weatherDataResponse.city)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
-                Text(weather.weatherDeatiledData.weatherDescription)
+                Text(weatherData.weatherDataResponse.weatherDescription)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
-                Text("Temperature: " + weather.weatherDeatiledData.temperature)
+                Text("Temperature: " + weatherData.weatherDataResponse.temperature)
                     .font(.body)
                     .foregroundColor(.white)
-                Text("Humidity: " + weather.weatherDeatiledData.humidity)
+                Text("Humidity: " + weatherData.weatherDataResponse.humidity)
                     .font(.body)
                     .foregroundColor(.white)
-                Text("Pressure: " + weather.weatherDeatiledData.pressure)
+                Text("Pressure: " + weatherData.weatherDataResponse.pressure)
                     .font(.body)
                     .foregroundColor(.white)
-                Text("Wind: " + weather.weatherDeatiledData.windDir + " " + weather.weatherDeatiledData.windSpeed)
+                Text("Wind: " + weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed)
                     .font(.body)
                     .foregroundColor(.white)
-                Text("Cloud cover: " + weather.weatherDeatiledData.cloudcover)
+                Text("Cloud cover: " + weatherData.weatherDataResponse.cloudcover)
                     .font(.body)
                     .foregroundColor(.white)
-                Text("UV index: " + weather.weatherDeatiledData.uv_index)
+                Text("UV index: " + weatherData.weatherDataResponse.uv_index)
                     .font(.body)
                     .foregroundColor(.white)
                 
                 Spacer()
-                Button(action: { self.weather.startWeatherDataProcessing(location: settings.location)}, label: {
-                    WeatherButton(title: "Get Weather", textColor: weather.isNight ? .black : .blue, backgroundColor: .white)
-                }).offset(y: -100)
+                Button(action: { self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
+                    WeatherButton(title: "Get Weather", textColor: weatherData.isNight ? .black : .blue, backgroundColor: .white)
+                }).offset(y: -90.0)
             }
             
             

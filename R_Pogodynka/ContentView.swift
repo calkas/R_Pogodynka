@@ -23,9 +23,10 @@ struct ContentView: View {
             
             RWeatherSettingsViewModel().environmentObject(settings).tabItem {
                 Image(systemName: "gearshape")
+                    .padding()
                 Text("Settings")
             }
-        }
+        }.accentColor(.red)
         
         
     }
