@@ -8,17 +8,22 @@
 import SwiftUI
 
 struct RWeatherSettingsViewModel: View {
+    @State var inputLocation = ""
     @EnvironmentObject var settings: Settings
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.white, .gray,Color("LightBlueWeatherColor")]), startPoint: /*@START_MENU_TOKEN@*/.topLeading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.bottomTrailing/*@END_MENU_TOKEN@*/)
-                .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            LinearGradient(gradient: Gradient(colors: [.white, .gray,Color("LightBlueWeatherColor")]), startPoint: .topLeading, endPoint:.bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
             VStack {
                 Text("Enter your location: ")
                     .font(.title2)
                     .foregroundColor(.white)
-                TextField("Enter your location...", text:   $settings.location).textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                TextField("Enter your location...", text: $inputLocation, onCommit: { self.settings.location = self.inputLocation})
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    .disableAutocorrection(true)
+                    .border(Color(UIColor.separator))
             }
         }
     }

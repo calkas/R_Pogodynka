@@ -11,51 +11,67 @@ struct RWeatherDetailedViewModel: View {
     @EnvironmentObject var settings: Settings
     @ObservedObject var weatherData: RWeatherData = RWeatherData()
     
+    fileprivate func DetailedWeatherDescView() -> some View {
+        let outputStr = "Temperature: " + weatherData.weatherDataResponse.temperature + "\n" +
+        "Humidity: " + weatherData.weatherDataResponse.humidity + "\n" +
+        "Pressure: " + weatherData.weatherDataResponse.pressure + "\n" +
+        "Wind: " + weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed + "\n" +
+        "Cloud cover: " + weatherData.weatherDataResponse.cloudcover + "\n" +
+        "UV index: " + weatherData.weatherDataResponse.uv_index
+        
+        return Text(outputStr)
+            .font(.body)
+            .foregroundColor(.white)
+    }
+    
+    fileprivate func tableFormatView(text:String, value: String) -> some View {
+        
+        return VStack {
+            HStack {
+                    Text(text)
+                        .font(.body)
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text(value)
+                        .font(.body)
+                        .foregroundColor(.white)
+                
+            }
+            Divider().foregroundColor(.white)
+            Spacer()
+        }
+    }
+    
     var body: some View {
         ZStack {
             RWeatherBackgroundView(isNight: $weatherData.isNight)
-            
+
             VStack {
                 Text(weatherData.weatherDataResponse.city)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
+                Text(weatherData.weatherDataResponse.localTime)
+                    .foregroundColor(.white)
+                    .italic()
                 Text(weatherData.weatherDataResponse.weatherDescription)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
-                Text("Temperature: " + weatherData.weatherDataResponse.temperature)
-                    .font(.body)
-                    .foregroundColor(.white)
-                Text("Humidity: " + weatherData.weatherDataResponse.humidity)
-                    .font(.body)
-                    .foregroundColor(.white)
-                Text("Pressure: " + weatherData.weatherDataResponse.pressure)
-                    .font(.body)
-                    .foregroundColor(.white)
-                Text("Wind: " + weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed)
-                    .font(.body)
-                    .foregroundColor(.white)
-                Text("Cloud cover: " + weatherData.weatherDataResponse.cloudcover)
-                    .font(.body)
-                    .foregroundColor(.white)
-                Text("UV index: " + weatherData.weatherDataResponse.uv_index)
-                    .font(.body)
-                    .foregroundColor(.white)
                 
+                tableFormatView(text: "Temperature", value: weatherData.weatherDataResponse.temperature)
+                tableFormatView(text: "Humidity", value: weatherData.weatherDataResponse.humidity)
+                tableFormatView(text: "Pressure", value: weatherData.weatherDataResponse.pressure)
+                tableFormatView(text: "Wind", value: weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed)
+                tableFormatView(text: "Cloud cover", value: weatherData.weatherDataResponse.cloudcover)
+                tableFormatView(text: "UV index", value: weatherData.weatherDataResponse.uv_index)
                 Spacer()
-                Button(action: { self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
-                    WeatherButton(title: "Get Weather", textColor: weatherData.isNight ? .black : .blue, backgroundColor: .white)
-                }).offset(y: -90.0)
             }
-            
-            
         }
-        /*
         .onAppear(){
-            self.weather.startWeatherDataProcessing(location: settings.location)
+            self.weatherData.startWeatherDataProcessing(location: settings.location)
         }
-        */
+
     }
 }
 

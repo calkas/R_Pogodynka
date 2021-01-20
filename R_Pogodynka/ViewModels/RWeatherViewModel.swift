@@ -22,8 +22,12 @@ struct RWeatherViewModel: View {
                     .bold()
                     .foregroundColor(.white)
                     .padding()
+                Text(weatherData.weatherDataResponse.localTime)
+                    .foregroundColor(.white)
+                    .italic()
                 Text(weatherData.weatherDataResponse.weatherDescription)
                     .padding()
+                    .font(.body)
                     .foregroundColor(.white)
 
                 Image(systemName:weatherData.weatherDataResponse.icon)
@@ -36,17 +40,12 @@ struct RWeatherViewModel: View {
                     .foregroundColor(.white)
                     .padding()
                 Spacer()
-                Button(action: { self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
-                    WeatherButton(title: "Get Weather", textColor: weatherData.isNight ? .black : .blue, backgroundColor: .white)
-                }).offset(y: -90.0)
             }
         }
-        
-        /* Not used now... Waiting for pull and refresh system...
         .onAppear(){
-            self.weather.startWeatherDataProcessing(location: settings.location)
+            self.weatherData.startWeatherDataProcessing(location: settings.location)
         }
-        */
+
 
     }
 }

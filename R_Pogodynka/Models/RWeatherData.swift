@@ -10,6 +10,7 @@ import Foundation
 
 struct RWeatherDataResponse {
     var city = "--"
+    var localTime = ""
     var weatherDescription = "--"
     var temperature = ""
     var icon = ""
@@ -101,9 +102,10 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
     }
         
     private func saveWeatherDataResponse(data: Weather) {
-        if let city = data.request?.query, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature, let windSpeed = data.current?.wind_speed, let windDir = data.current?.wind_dir, let pressure = data.current?.pressure, let humidity = data.current?.humidity, let cloudcover = data.current?.cloudcover, let uv_index = data.current?.uv_index {
+        if let city = data.request?.query,let localTime = data.location?.localtime, let weatherDescription = data.current?.weather_descriptions[0], let temperature = data.current?.temperature, let windSpeed = data.current?.wind_speed, let windDir = data.current?.wind_dir, let pressure = data.current?.pressure, let humidity = data.current?.humidity, let cloudcover = data.current?.cloudcover, let uv_index = data.current?.uv_index {
             
             weatherDataResponse.city = city
+            weatherDataResponse.localTime = localTime
             weatherDataResponse.weatherDescription = weatherDescription
             weatherDataResponse.temperature = "\(temperature) °C"
             weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
