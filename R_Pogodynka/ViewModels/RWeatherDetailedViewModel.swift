@@ -51,9 +51,16 @@ struct RWeatherDetailedViewModel: View {
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
-                Text(weatherData.weatherDataResponse.localTime)
-                    .foregroundColor(.white)
-                    .italic()
+                HStack {
+                    Text(weatherData.weatherDataResponse.localTime)
+                        .foregroundColor(.white)
+                        .italic()
+                    Button(action: {self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
+                        Image(systemName: "arrow.clockwise")
+                            .foregroundColor(.white)
+                    })
+                }
+
                 Text(weatherData.weatherDataResponse.weatherDescription)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)

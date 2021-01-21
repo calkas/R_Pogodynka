@@ -26,7 +26,7 @@ struct ContentView: View {
                     .padding()
                 Text("Settings")
             }
-        }.accentColor(.red)
+        }
         
         
     }
