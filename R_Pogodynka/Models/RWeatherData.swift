@@ -26,10 +26,12 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
     
     @Published var weatherDataResponse = RWeatherDataResponse()
     @Published var isNight = false
+    @Published var isFetchingDone = true
     
     func startWeatherDataProcessing(location: String) {
         if let url = URL(string: getWeatherUrlAddress(location: location))
         {
+            isFetchingDone.toggle()
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil {
                     return
@@ -53,6 +55,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
                                     }
                                 }
                                 self.saveWeatherDataResponse(data: rawData)
+                                self.isFetchingDone = true
                             }
                         }
                     }

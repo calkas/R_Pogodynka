@@ -30,14 +30,15 @@ struct RWeatherSettingsViewModel: View {
                 }.padding()
 
                 GroupBox(label: Text("Current location:  \(settings.location)"), content: {
-                })
+                }).frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 
                 GroupBox(label: Text("Set new location"), content: {
                     HStack {
                         Image(systemName:"1.magnifyingglass").resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .frame(width: 25, height: 25, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .padding()
+          
                         Spacer()
                         TextField("Enter your location...", text: $inputLocation, onCommit: { self.settings.location = self.inputLocation})
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -47,17 +48,24 @@ struct RWeatherSettingsViewModel: View {
                     }
 
                 })
+                .frame(width: 300, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+ 
         
                 GroupBox(label: Text("About"), content: {
+
+                    Text("Weather application base on Real-Time Weather API from api.weatherstack.com")
+                        .multilineTextAlignment(.leading)
+                    
                     HStack {
                         Text("Version")
                             .padding()
                         Spacer()
                         Text("1.0")
-
                     }
                     
                 })
+                .frame(width: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                .padding()
                 Spacer()
             }
         }

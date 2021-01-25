@@ -52,12 +52,24 @@ struct RWeatherDetailedViewModel: View {
                     .foregroundColor(.white)
                     .padding()
                 HStack {
-                    Text(weatherData.weatherDataResponse.localTime)
-                        .foregroundColor(.white)
-                        .italic()
-                    Button(action: {self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
-                        Image(systemName: "arrow.clockwise")
+                    if(weatherData.isFetchingDone)
+                    {
+                        Text(weatherData.weatherDataResponse.localTime)
                             .foregroundColor(.white)
+                            .italic()
+                    }
+                    else
+                    {
+                        Text("Fetching...")
+                            .foregroundColor(.white)
+                            .italic()
+                    }
+                    Button(action: {self.weatherData.startWeatherDataProcessing(location: settings.location)}, label: {
+                        Image(systemName: "arrow.2.circlepath")
+                            .foregroundColor(.white)
+                            .rotationEffect(.degrees(weatherData.isFetchingDone ? 360:0))
+                            .animation(.linear)
+                            .onAppear() {}
                     })
                 }
 
