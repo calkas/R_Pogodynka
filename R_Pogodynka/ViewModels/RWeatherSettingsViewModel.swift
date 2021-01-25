@@ -53,16 +53,13 @@ struct RWeatherSettingsViewModel: View {
         
                 GroupBox(label: Text("About"), content: {
 
-                    Text("Weather application base on Real-Time Weather API from api.weatherstack.com")
-                        .multilineTextAlignment(.leading)
-                    
                     HStack {
                         Text("Version")
                             .padding()
                         Spacer()
                         Text("1.0")
                     }
-                    
+                    Link("GitHub Repo", destination: URL(string: "https://github.com/calkas/R_Pogodynka")!)
                 })
                 .frame(width: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding()

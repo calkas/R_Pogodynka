@@ -5,7 +5,7 @@ Weather application base on Real-Time Weather API from http://api.weatherstack.c
 
 ## App runtime
 
-### Daily View
+### Day View
 ![image info](./Misc/appOnRunning2.gif)
 
 ### Night View
