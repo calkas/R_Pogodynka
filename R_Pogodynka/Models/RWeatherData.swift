@@ -31,7 +31,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
     func startWeatherDataProcessing(location: String) {
         if let url = URL(string: getWeatherUrlAddress(location: location))
         {
-            isFetchingDone.toggle()
+            self.isFetchingDone = false
             URLSession.shared.dataTask(with: url) { data, response, error in
                 if error != nil {
                     return
@@ -110,16 +110,32 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
             weatherDataResponse.city = city
             weatherDataResponse.localTime = localTime
             weatherDataResponse.weatherDescription = weatherDescription
-            weatherDataResponse.temperature = "\(temperature) °C"
+            weatherDataResponse.temperature = "\(temperature)"
             weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
-            weatherDataResponse.windSpeed = "\(windSpeed) km/h"
+            weatherDataResponse.windSpeed = "\(windSpeed)"
             weatherDataResponse.windDir = windDir
-            weatherDataResponse.pressure = "\(pressure) hPa"
-            weatherDataResponse.humidity = "\(humidity) %"
-            weatherDataResponse.cloudcover = "\(cloudcover) %"
+            weatherDataResponse.pressure = "\(pressure)"
+            weatherDataResponse.humidity = "\(humidity)"
+            weatherDataResponse.cloudcover = "\(cloudcover)"
             weatherDataResponse.uv_index = "\(uv_index)"
         }
         
+    }
+    
+    func getFakeWeatherData(isNight: Bool) {
+        weatherDataResponse.city = "Katowice"
+        weatherDataResponse.localTime = "28.01.2021 19:25"
+        weatherDataResponse.weatherDescription = "Sunny"
+        weatherDataResponse.temperature = "5"
+        weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: "Sunny")
+        weatherDataResponse.windSpeed = "10"
+        weatherDataResponse.windDir = "NW"
+        weatherDataResponse.pressure = "1001"
+        weatherDataResponse.humidity = "74"
+        weatherDataResponse.cloudcover = "80"
+        weatherDataResponse.uv_index = "4"
+        self.isNight = isNight
+        isFetchingDone = true
     }
 }
 

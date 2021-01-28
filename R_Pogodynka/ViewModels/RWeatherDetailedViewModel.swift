@@ -11,42 +11,11 @@ struct RWeatherDetailedViewModel: View {
     @EnvironmentObject var settings: Settings
     @ObservedObject var weatherData: RWeatherData = RWeatherData()
     
-    fileprivate func DetailedWeatherDescView() -> some View {
-        let outputStr = "Temperature: " + weatherData.weatherDataResponse.temperature + "\n" +
-        "Humidity: " + weatherData.weatherDataResponse.humidity + "\n" +
-        "Pressure: " + weatherData.weatherDataResponse.pressure + "\n" +
-        "Wind: " + weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed + "\n" +
-        "Cloud cover: " + weatherData.weatherDataResponse.cloudcover + "\n" +
-        "UV index: " + weatherData.weatherDataResponse.uv_index
-        
-        return Text(outputStr)
-            .font(.body)
-            .foregroundColor(.white)
-    }
-    
-    fileprivate func tableFormatView(text:String, value: String) -> some View {
-        
-        return VStack {
-            HStack {
-                    Text(text)
-                        .font(.body)
-                        .foregroundColor(.white)
-                    Spacer()
-                    Text(value)
-                        .font(.body)
-                        .foregroundColor(.white)
-                
-            }
-            Divider().foregroundColor(.white)
-            Spacer()
-        }
-    }
-    
     var body: some View {
         ZStack {
             RWeatherBackgroundView(isNight: $weatherData.isNight)
-
-            VStack {
+            
+            ScrollView {
                 Text(weatherData.weatherDataResponse.city)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
@@ -72,25 +41,84 @@ struct RWeatherDetailedViewModel: View {
                             .onAppear() {}
                     })
                 }
-
+                
                 Text(weatherData.weatherDataResponse.weatherDescription)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.white)
                     .padding()
                 
-                tableFormatView(text: "Temperature", value: weatherData.weatherDataResponse.temperature)
-                tableFormatView(text: "Humidity", value: weatherData.weatherDataResponse.humidity)
-                tableFormatView(text: "Pressure", value: weatherData.weatherDataResponse.pressure)
-                tableFormatView(text: "Wind", value: weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed)
-                tableFormatView(text: "Cloud cover", value: weatherData.weatherDataResponse.cloudcover)
-                tableFormatView(text: "UV index", value: weatherData.weatherDataResponse.uv_index)
-                Spacer()
-            }
-        }
-        .onAppear(){
-            self.weatherData.startWeatherDataProcessing(location: settings.location)
-        }
+            tableFormatView(text: "Temperature", value: weatherData.weatherDataResponse.temperature + " °C")
+            tableFormatView(text: "Pressure", value: weatherData.weatherDataResponse.pressure + " hPa")
+            tableFormatView(text: "Wind", value: weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed + " km/h")
 
+                HStack {
+                    CircleProgressBarView(progressBarName: "Humidity", value: weatherData.weatherDataResponse.humidity, maxValue: "100", specialSign: "%")
+                        .padding()
+                    CircleProgressBarView(progressBarName: "UV", value: weatherData.weatherDataResponse.uv_index, maxValue: "10")
+                }
+                
+                CircleProgressBarView(progressBarName: "Cloud cover", value: weatherData.weatherDataResponse.cloudcover, maxValue: "100", specialSign: "%")
+                
+                Spacer()
+                
+                
+            }.onAppear() { //self.weatherData.startWeatherDataProcessing(location: settings.location)
+                self.weatherData.getFakeWeatherData(isNight: false)
+            }
+            
+        }
+    }
+    
+    
+    fileprivate func tableFormatView(text:String, value: String) -> some View {
+        
+        return VStack {
+            HStack {
+                Text(text)
+                    .font(.body)
+                    .foregroundColor(.white)
+                Spacer()
+                Text(value)
+                    .font(.body)
+                    .foregroundColor(.white)
+                
+            }
+            Divider().foregroundColor(.white)
+            Spacer()
+        }
+    }
+    
+    fileprivate func CircleProgressBarView(progressBarName: String, value: String, maxValue: String, specialSign: String = "") -> some View {
+        
+        let convValue: CGFloat = CGFloat(Int(value) ?? 0)
+        let convMaxValue: CGFloat = CGFloat(Int(maxValue) ?? 0)
+        return
+            VStack {
+                Text(progressBarName)
+                    .foregroundColor(.white)
+                    .font(.body)
+                ZStack {
+                    Circle()
+                        .stroke(Color.white, lineWidth: 10.0)
+                        .opacity(0.3)
+                        .frame(width: 100, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    Circle()
+                        .trim(from: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, to: min(CGFloat(convValue / convMaxValue), 1.0))
+                        .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))
+                        .rotationEffect(Angle(degrees: 270.0))
+                        .foregroundColor(weatherData.isNight ? Color.pink : Color.blue)
+                        .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    Text("\(value)" + specialSign)
+                        .font(.body)
+                        .foregroundColor(.white)
+                }
+            }
+    }
+    
+    
+    fileprivate func WindProgressBarView(progressBarName: String, windData: String) {
+        
     }
 }
 

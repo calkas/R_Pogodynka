@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct RWeatherSettingsViewModel: View {
-    @State var inputLocation = ""
+    @State private var inputLocation = ""
     @EnvironmentObject var settings: Settings
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, Color("LightBlueWeatherColor")]), startPoint: /*@START_MENU_TOKEN@*/.topLeading/*@END_MENU_TOKEN@*/, endPoint: /*@START_MENU_TOKEN@*/.bottomTrailing/*@END_MENU_TOKEN@*/)
                 .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-
             VStack {
                 HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                     Text("Settings")
