@@ -27,8 +27,6 @@ struct ContentView: View {
                 Text("Settings")
             }
         }
-        
-        
     }
 }
 

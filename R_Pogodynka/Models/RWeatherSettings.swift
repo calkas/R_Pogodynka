@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class Settings : ObservableObject {
     
     init(location: String) {

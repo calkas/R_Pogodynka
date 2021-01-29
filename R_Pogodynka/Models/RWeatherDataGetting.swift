@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 protocol RWeatherDataGetting {
     func startWeatherDataProcessing(location: String) -> Void
 }

@@ -43,35 +43,43 @@ struct RWeatherDetailedViewModel: View {
                 }
                 
                 Text(weatherData.weatherDataResponse.weatherDescription)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .font(.title2)
                     .foregroundColor(.white)
                     .padding()
                 
-            tableFormatView(text: "Temperature", value: weatherData.weatherDataResponse.temperature + " °C")
-            tableFormatView(text: "Pressure", value: weatherData.weatherDataResponse.pressure + " hPa")
-            tableFormatView(text: "Wind", value: weatherData.weatherDataResponse.windDir + " " + weatherData.weatherDataResponse.windSpeed + " km/h")
-
-                HStack {
-                    CircleProgressBarView(progressBarName: "Humidity", value: weatherData.weatherDataResponse.humidity, maxValue: "100", specialSign: "%")
-                        .padding()
-                    CircleProgressBarView(progressBarName: "UV", value: weatherData.weatherDataResponse.uv_index, maxValue: "10")
-                }
-                
-                CircleProgressBarView(progressBarName: "Cloud cover", value: weatherData.weatherDataResponse.cloudcover, maxValue: "100", specialSign: "%")
-                
+                weatherDataTableView()
+                weatherIndicatorsView()
                 Spacer()
-                
                 
             }.onAppear() { //self.weatherData.startWeatherDataProcessing(location: settings.location)
                 self.weatherData.getFakeWeatherData(isNight: false)
             }
-            
         }
     }
     
+    fileprivate func weatherDataTableView() -> some View {
+        return VStack {
+            tableFormatView(text: "Temperature", value: "\(weatherData.weatherDataResponse.temperature) °C")
+            tableFormatView(text: "Pressure", value: "\(weatherData.weatherDataResponse.pressure) hPa")
+        }
+    }
+    
+    fileprivate func weatherIndicatorsView() -> some View {
+        return VStack {
+            HStack {
+                CircleProgressBarView(progressBarName: "Humidity", value: weatherData.weatherDataResponse.humidity, maxValue: 100, specialSign: "%")
+                    .padding()
+                WindProgressBarView()
+            }
+            HStack {
+                CircleProgressBarView(progressBarName: "Cloud cover", value: weatherData.weatherDataResponse.cloudcover, maxValue: 100, specialSign: "%")
+                    .padding()
+                CircleProgressBarView(progressBarName: "UV", value: weatherData.weatherDataResponse.uv_index, maxValue: 10)
+            }
+        }
+    }
     
     fileprivate func tableFormatView(text:String, value: String) -> some View {
-        
         return VStack {
             HStack {
                 Text(text)
@@ -81,17 +89,16 @@ struct RWeatherDetailedViewModel: View {
                 Text(value)
                     .font(.body)
                     .foregroundColor(.white)
-                
             }
             Divider().foregroundColor(.white)
             Spacer()
         }
     }
     
-    fileprivate func CircleProgressBarView(progressBarName: String, value: String, maxValue: String, specialSign: String = "") -> some View {
+    fileprivate func CircleProgressBarView(progressBarName: String, value: Int, maxValue: Int, specialSign: String = "") -> some View {
         
-        let convValue: CGFloat = CGFloat(Int(value) ?? 0)
-        let convMaxValue: CGFloat = CGFloat(Int(maxValue) ?? 0)
+        let convValue    = CGFloat(value)
+        let convMaxValue = CGFloat(maxValue)
         return
             VStack {
                 Text(progressBarName)
@@ -116,9 +123,33 @@ struct RWeatherDetailedViewModel: View {
             }
     }
     
-    
-    fileprivate func WindProgressBarView(progressBarName: String, windData: String) {
+    fileprivate func WindProgressBarView() -> some View {
+        let dic: [String: CGFloat] = ["N": 0.0, "NE": 0.114, "E": 0.24, "SE": 0.374, "S": 0.49, "SW": 0.624, "W": 0.74, "NW": 0.874]
         
+        let windDirValue = dic[weatherData.weatherDataResponse.windDir] ?? 0.0
+        let offset: CGFloat = 0.01
+        
+        return VStack {
+            Text("Wind - " + weatherData.weatherDataResponse.windDir)
+                .foregroundColor(.white)
+                .font(.body)
+            ZStack {
+                Circle()
+                    .stroke(Color.white, lineWidth: 10.0)
+                    .opacity(0.3)
+                    .frame(width: 100, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment:/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Circle()
+                    .trim(from: windDirValue, to: windDirValue + offset)
+                    .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))
+                    .rotationEffect(Angle(degrees: 270.0))
+                    .foregroundColor(weatherData.isNight ? Color.pink : Color.blue)
+                    .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment:/*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Text("\(weatherData.weatherDataResponse.windSpeed) km/h")
+                    .font(.body)
+                    .foregroundColor(.white)
+            }
+        }
     }
 }
 

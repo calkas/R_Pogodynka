@@ -12,14 +12,14 @@ struct RWeatherDataResponse {
     var city = "--"
     var localTime = ""
     var weatherDescription = "--"
-    var temperature = ""
+    var temperature = 0
     var icon = ""
-    var windSpeed = ""
+    var windSpeed = 0
     var windDir = ""
-    var pressure = ""
-    var humidity = ""
-    var cloudcover = ""
-    var uv_index = ""
+    var pressure = 0
+    var humidity = 0
+    var cloudcover = 0
+    var uv_index = 0
 }
 
 class RWeatherData : ObservableObject, RWeatherDataGetting {
@@ -110,14 +110,14 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
             weatherDataResponse.city = city
             weatherDataResponse.localTime = localTime
             weatherDataResponse.weatherDescription = weatherDescription
-            weatherDataResponse.temperature = "\(temperature)"
+            weatherDataResponse.temperature = temperature
             weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: weatherDescription)
-            weatherDataResponse.windSpeed = "\(windSpeed)"
+            weatherDataResponse.windSpeed = windSpeed
             weatherDataResponse.windDir = windDir
-            weatherDataResponse.pressure = "\(pressure)"
-            weatherDataResponse.humidity = "\(humidity)"
-            weatherDataResponse.cloudcover = "\(cloudcover)"
-            weatherDataResponse.uv_index = "\(uv_index)"
+            weatherDataResponse.pressure = pressure
+            weatherDataResponse.humidity = humidity
+            weatherDataResponse.cloudcover = cloudcover
+            weatherDataResponse.uv_index = uv_index
         }
         
     }
@@ -126,14 +126,14 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
         weatherDataResponse.city = "Katowice"
         weatherDataResponse.localTime = "28.01.2021 19:25"
         weatherDataResponse.weatherDescription = "Sunny"
-        weatherDataResponse.temperature = "5"
+        weatherDataResponse.temperature = Int.random(in: -10...20)
         weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: "Sunny")
-        weatherDataResponse.windSpeed = "10"
-        weatherDataResponse.windDir = "NW"
-        weatherDataResponse.pressure = "1001"
-        weatherDataResponse.humidity = "74"
-        weatherDataResponse.cloudcover = "80"
-        weatherDataResponse.uv_index = "4"
+        weatherDataResponse.windSpeed = 12
+        weatherDataResponse.windDir = "S"
+        weatherDataResponse.pressure = 1002
+        weatherDataResponse.humidity = Int.random(in: 10...100)
+        weatherDataResponse.cloudcover = Int.random(in: 10...100)
+        weatherDataResponse.uv_index = Int.random(in: 1...10)
         self.isNight = isNight
         isFetchingDone = true
     }
