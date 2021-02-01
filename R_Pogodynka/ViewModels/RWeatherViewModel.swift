@@ -64,12 +64,7 @@ struct RWeatherViewModel: View {
                 Spacer()
             }
         }
-        .onAppear(){
-            //self.weatherData.startWeatherDataProcessing(location: settings.location)
-            self.weatherData.getFakeWeatherData(isNight: false)
-        }
-
-
+        .onAppear(){ self.weatherData.startWeatherDataProcessing(location: settings.location) }
     }
 }
 
