@@ -122,7 +122,7 @@ struct RWeatherDetailedViewModel: View {
     }
     
     fileprivate func WindProgressBarView() -> some View {
-        let dic: [String: CGFloat] = ["N": 0.0, "NE": 0.114, "E": 0.24, "SE": 0.374, "ESE":0.374, "S": 0.49, "SW": 0.624, "W": 0.74, "NW": 0.874]
+        let dic: [String: CGFloat] = ["N": 0.0, "NE": 0.114, "NNE": 0.114, "E": 0.24, "SE": 0.374, "ESE":0.374, "S": 0.49, "SW": 0.624, "W": 0.74, "NW": 0.874]
         
         let windDirValue = dic[weatherData.weatherDataResponse.windDir] ?? 0.0
         let offset: CGFloat = 0.01

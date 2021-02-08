@@ -8,6 +8,5 @@
 import Foundation
 
 protocol RWeatherDataGetting {
-    var weatherDataResponse: RWeatherDataResponse {get set}
     func startWeatherDataProcessing(location: String) -> Void
 }
