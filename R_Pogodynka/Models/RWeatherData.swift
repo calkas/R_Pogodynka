@@ -9,7 +9,7 @@
 import Foundation
 
 class RWeatherData : ObservableObject, RWeatherDataGetting {
-    
+
     @Published var weatherDataResponse = RWeatherDataResponse()
     @Published var isNight = false
     @Published var isFetchingDone = true
@@ -64,7 +64,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
         }
         
         switch weatherDesc {
-            case "Clear": return "moon.stars.fill"
+            case "Clear": return "sun.max.fill"
             case "Sunny": return "sun.max.fill"
             case "Partly cloudy Moon": return "cloud.moon.fill"
             case "Partly cloudy": return "cloud.sun.fill"
@@ -84,6 +84,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
             case "Light rain": return "cloud.rain.fill"
             case "Moderate rain at times": return "cloud.rain.fill"
             case "Heavy rain": return "cloud.heavyrain.fill"
+            case "Heavy snow": return "cloud.snow.fill"
             case "Light freezing rain": return "cloud.hail.fill"
             case "Heavy rain at times": return "cloud.heavyrain.fill"
             default: return "sun.max.fill"
@@ -115,7 +116,7 @@ class RWeatherData : ObservableObject, RWeatherDataGetting {
         weatherDataResponse.temperature = Int.random(in: -10...20)
         weatherDataResponse.icon = self.getWeatherIcon(weatherDesc: "Sunny")
         weatherDataResponse.windSpeed = 12
-        weatherDataResponse.windDir = "S"
+        weatherDataResponse.windDir = "SSW"
         weatherDataResponse.pressure = 1002
         weatherDataResponse.humidity = Int.random(in: 10...100)
         weatherDataResponse.cloudcover = Int.random(in: 10...100)

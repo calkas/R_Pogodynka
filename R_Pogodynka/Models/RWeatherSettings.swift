@@ -12,6 +12,5 @@ class Settings : ObservableObject {
     init(location: String) {
         self.location = location
     }
-
     @Published var location: String
 }

@@ -9,4 +9,4 @@ Weather application base on Real-Time Weather API from http://api.weatherstack.c
 ![image info](./Misc/appOnRunning2.gif)
 
 ### Night View
-![image info](./Misc/appOnRunning.gif)
+
