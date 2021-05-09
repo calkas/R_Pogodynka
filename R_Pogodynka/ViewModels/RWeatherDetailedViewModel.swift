@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RWeatherDetailedViewModel: View {
     @EnvironmentObject var settings: Settings
-    @ObservedObject var weatherData: RWeatherData = RWeatherData()
+    @StateObject var weatherData = RWeatherData()
     
     var body: some View {
         ZStack {
